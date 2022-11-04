@@ -4,7 +4,6 @@ const PORT = 3000;
 console.log(PORT);
 
 const server = app.listen(PORT, () =>
-  console.log(`Server is running on PORT: ${PORT}`),
-);
+  console.log(`Server is running on PORT: ${PORT}`));
 
 export default server;
