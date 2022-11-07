@@ -6,7 +6,7 @@ import mysql from './connection';
 export default class LoginModel {
   constructor(private connection = mysql) { }
 
-  public async findByLogin(user: IUserLogin): Promise<IUser> {
+  public async login(user: IUserLogin): Promise<IUser> {
     const { username, password } = user;
     const [[result]] = await this.connection.execute<(
     IUser & RowDataPacket)[]>(

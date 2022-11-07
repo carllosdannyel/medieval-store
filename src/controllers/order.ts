@@ -8,7 +8,7 @@ export default class OrderController {
 
   public async findAll(_req: Request, res: Response) {
     const { type, message } = await this.orderService.findAll() as unknown as Exception;
-    if (type) return res.status(mapError(type)).json(message);
+    if (type) return res.status(mapError(type)).json({ message });
     res.status(200).json(message);
   }
 }
