@@ -1,5 +1,5 @@
-import { ResultSetHeader } from 'mysql2';
-import { IProduct, IProductID } from '../interfaces/product';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { IProduct, IProductID, IProductALL } from '../interfaces/product';
 import mysql from './connection';
 
 export default class ProductModel {
@@ -12,5 +12,12 @@ export default class ProductModel {
       [name, amount],
     );
     return { id: insertId, ...product };
+  }
+
+  public async findAll(): Promise<IProductALL[]> {
+    const [result] = await this.connection.execute<
+    IProductALL[] & RowDataPacket[]
+    >('SELECT * FROM Products');
+    return result;
   }
 }

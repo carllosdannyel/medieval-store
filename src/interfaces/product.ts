@@ -6,3 +6,7 @@ export interface IProduct {
 export interface IProductID extends IProduct {
   id: number;
 }
+
+export interface IProductALL extends IProductID {
+  orderId: number | null;
+}
