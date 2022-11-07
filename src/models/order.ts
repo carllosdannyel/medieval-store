@@ -1,4 +1,4 @@
-import { RowDataPacket } from 'mysql2';
+import { RowDataPacket } from 'mysql2/promise';
 import { IOrder } from '../interfaces/order';
 import mysql from './connection';
 
