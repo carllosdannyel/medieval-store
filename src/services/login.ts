@@ -8,12 +8,9 @@ export default class LoginService {
 
   public async login(user: IUserLogin): Promise<IResolves> {
     const userExist = await this.loginModel.login(user);
+    if (!userExist) return { type: 'UNAUTHORIZED', message: 'Username or password invalid' };
 
-    if (!userExist) {
-      return { type: 'UNAUTHORIZED', message: 'Username or password invalid' };
-    }
     const { password, ...userWithoutPassword } = userExist;
-
     const token = generateToken(userWithoutPassword);
 
     return { type: null, message: { token } };
