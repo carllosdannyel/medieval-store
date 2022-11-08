@@ -1,5 +1,6 @@
-import { RowDataPacket } from 'mysql2/promise';
+import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { IOrder } from '../interfaces/order';
+import { IUser } from '../interfaces/user';
 import mysql from './connection';
 
 export default class OrderModel {
@@ -14,5 +15,13 @@ export default class OrderModel {
       GROUP BY orders.id, orders.userId`,
     );
     return result;
+  }
+
+  public async createOrder(user: IUser): Promise<number> { 
+    const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
+      [user.id],
+    );
+    return insertId;
   }
 }

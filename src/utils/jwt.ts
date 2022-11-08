@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { IUser } from '../interfaces/user';
-import HttpException from './httpException';
 
 export function generateToken(user: IUser): string {
   const { password, ...userWithoutPassword } = user;
@@ -12,12 +11,14 @@ export function generateToken(user: IUser): string {
   });
 }
 
-export function validateToken(token: string | undefined) {
-  if (!token) throw new HttpException(401, 'Token não encontrado!');
+export function validateToken(token: string): string | jwt.JwtPayload {
+  if (!token) return { type: 'UNAUTHORIZED', message: 'Token not found' };
 
   try {
-    return jwt.verify(token, process.env.JWT_SECRET as string);
-  } catch (error) {
-    throw new HttpException(401, 'Expired or invalid token');
+    const payload = jwt.verify(token, process.env.JWT_SECRET as string);
+    
+    return { type: null, message: payload };
+  } catch (error) { 
+    return { type: 'UNAUTHORIZED', message: 'Invalid token' };
   }
 }

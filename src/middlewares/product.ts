@@ -17,8 +17,8 @@ const bodySchema = Joi.object({
   }),
 });
 
-function validateBody(user: IProduct): IJoi {
-  const { error } = bodySchema.validate(user);
+function validateBody(product: IProduct): IJoi {
+  const { error } = bodySchema.validate(product);
   if (error) {
     return { 
       type: error.details[0].type === 'any.required' ? 'BAD_REQUEST' : 'UNPROCESSABLE_ENTITY', 

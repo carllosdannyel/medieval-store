@@ -1,4 +1,4 @@
-import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { FieldPacket, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { IProduct } from '../interfaces/product';
 import mysql from './connection';
 
@@ -19,5 +19,15 @@ export default class ProductModel {
     IProduct[] & RowDataPacket[]
     >('SELECT * FROM Trybesmith.Products');
     return result;
+  }
+
+  public async insertOrderId(
+    id: number,
+    orderId: number,
+  ): Promise<[ResultSetHeader, FieldPacket[]]> {
+    return this.connection.execute<ResultSetHeader>(
+      'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?',
+      [orderId, id],
+    );
   }
 }
