@@ -15,8 +15,6 @@ const bodySchema = Joi.object({
 function validateBody({ productsIds }: IProductsIds): IJoi {
   const { error } = bodySchema.validate({ productsIds });
   if (error) {
-    console.log(error);
-    
     return { 
       type: error.details[0].type === 'any.required' ? 'BAD_REQUEST' : 'UNPROCESSABLE_ENTITY', 
       message: error.message,
